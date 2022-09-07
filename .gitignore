@@ -1,0 +1,8 @@
+# Ignore the build directory
+/Output
+
+# The file containing environment variables 
+.env
+
+# Ignore IDE specific files
+.vs/
