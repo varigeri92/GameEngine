@@ -8,6 +8,9 @@
 #include "Rendering/Camera.h"
 
 namespace core {
+
+	struct Entity;
+
 	struct Transform
 	{
 		Transform() :
@@ -59,14 +62,17 @@ namespace core {
 			Camera camera(aspect, fov, near, far);
 			proj = camera.GetProjection();
 			view = camera.GetView();
-
-
 		};
 
 		float m_aspect, m_fov, m_near, m_far;
 
 		glm::mat4 proj{};
 		glm::mat4 view{};
+
+		//CameraMovement
+		float v_axis = 0, h_axis = 0, u_axis = 0;
+		float MouseSensitivity = 1500.f;
+		float speed = 5.f;
 
 		Entity* entity = nullptr;
 	};

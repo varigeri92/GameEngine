@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "Log.h"
-#include "Component.h"
+
 #include "UI/UI.h"
 #include "UI/inspector.h"
 
@@ -9,6 +9,8 @@
 
 #include "Rendering/Renderer.h"
 #include "Rendering/Camera.h"
+
+#include "CameraSystem.h"
 
 core::Entity core::Scene::CreateEntity(std::string name)
 {
@@ -26,35 +28,20 @@ void core::Scene::CreateScene(Renderer* renderer, core::ui::UI &ui)
 
 void core::Scene::Awake()
 {
-	auto view = m_registry.view<Component>();
-
-	for (auto entity : view)
-	{
-		auto component = view.get<Component>(entity);
-		component.OnAwake();
-	}
+	InitCameraTransform(activeCamera->entity->GetComponent<Transform>(), 
+		{ 0.f, 0.f, 5.f }, 
+		{ 0.f, -90.f, 0.f }
+	);
 }
 
 void core::Scene::Start()
 {
-	auto view = m_registry.view<Component>();
-
-	for (auto entity : view)
-	{
-		auto component = view.get<Component>(entity);
-		component.OnStart();
-	}
+	
 }
 
 void core::Scene::Update()
 {
-	auto view = m_registry.view<Component>();
-
-	for (auto entity : view)
-	{
-		auto component = view.get<Component>(entity);
-		component.OnUpdate();
-	}
+	FlyCameraUpdate(activeCamera->entity->GetComponent<Transform>(), *activeCamera);
 }
 
 void core::Scene::Render()

@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="src\UI\inspector.cpp" />
     <ClCompile Include="src\ImGui\imgui.cpp" />
     <ClCompile Include="src\ImGui\imgui_demo.cpp" />
@@ -161,7 +162,6 @@
     <ClCompile Include="src\Rendering\OpenGL\GL_Shader.cpp" />
     <ClCompile Include="src\Rendering\OpenGL\OpenGL_Renderer.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
-    <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\input.cpp" />
     <ClCompile Include="src\EngineTime.cpp" />
@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="API\Engine.h" />
     <ClInclude Include="API\Log.h" />
+    <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="src\AssetPath.h" />
     <ClInclude Include="src\Components.h" />
     <ClInclude Include="src\UI\inspector.h" />
@@ -192,7 +193,6 @@
     <ClInclude Include="src\Rendering\OpenGL\GL_Shader.h" />
     <ClInclude Include="src\Rendering\OpenGL\OpenGL_Renderer.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
-    <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\EngineTime.h" />
     <ClInclude Include="src\Window.h" />

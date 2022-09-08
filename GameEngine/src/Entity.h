@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "Components.h"
-#include "Component.h"
+
 #include <vector>
 #include <utility>
 #include <entt/entt.hpp>
@@ -27,7 +27,7 @@ namespace core {
 			return component;
 		}
 		template<typename T>
-		T& GetComponet()
+		T& GetComponent()
 		{
 			return scene->m_registry.get<T>(m_entity);
 		}

@@ -58,9 +58,6 @@ _API int Engine::Run()
 	ui.InitGUI(window);
 	scene.CreateScene(renderer, ui);
 
-	
-
-
 	//test:
 	Assimp::Importer importer;
 
@@ -107,7 +104,6 @@ _API int Engine::Run()
 	Entity cameraEntity = scene.CreateEntity("Camera");
 	CameraComponent cameraComponent 
 		= cameraEntity.AddComponet<CameraComponent>((float)window->width / (float)window->height, 60.f, 0.1f, 1000.f); 
-	Component component = cameraEntity.AddComponet<Component>();
 
 	scene.activeCamera = &cameraComponent;
 

@@ -22,6 +22,8 @@
 
 #include "AssetPath.h"
 
+#include "CameraSystem.h"
+
 
 
 using namespace core;
@@ -110,7 +112,14 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 	glViewport(0, 0, window->width, window->height);
 
 	float aspect = (float)window->width / window->height;
-	
+	UpdateCameraProj_Aspect(*scene.GetActiveCamera(), aspect);
+	glm::mat4 view = glm::mat4(1.0f);
+	view = glm::lookAt(
+		scene.GetActiveCamera()->entity->GetComponent<Transform>().position,
+		scene.GetActiveCamera()->entity->GetComponent<Transform>().position +
+		scene.GetActiveCamera()->entity->GetComponent<Transform>().Front,
+		scene.GetActiveCamera()->entity->GetComponent<Transform>().Up
+	);
 
 	shader.Use();
 	shader.SetMat4("projection", scene.GetActiveCamera()->proj);
@@ -119,22 +128,21 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 	mesh->m_vertexBuffer.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);
-	glm::mat4 view = glm::mat4(1.0f);
 	glm::mat4 translate = glm::mat4(1.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scale = glm::mat4(1.0f);
 
 	glm::mat4 modelMatrix(1.f);
 	
-	translate = glm::translate(glm::mat4(1), mesh->entity->GetComponet<Transform>().position);
+	translate = glm::translate(glm::mat4(1), mesh->entity->GetComponent<Transform>().position);
 
 
-	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1), mesh->entity->GetComponet<Transform>().scale);
+	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1), mesh->entity->GetComponent<Transform>().scale);
 
 	glm::vec3 EulerAngles(
-		degreesToRadians(mesh->entity->GetComponet<Transform>().rotation.x),
-		degreesToRadians(mesh->entity->GetComponet<Transform>().rotation.y),
-		degreesToRadians(mesh->entity->GetComponet<Transform>().rotation.z)
+		degreesToRadians(mesh->entity->GetComponent<Transform>().rotation.x),
+		degreesToRadians(mesh->entity->GetComponent<Transform>().rotation.y),
+		degreesToRadians(mesh->entity->GetComponent<Transform>().rotation.z)
 	);
 
 	glm::quat Quaternion = glm::quat(-EulerAngles);
@@ -142,12 +150,6 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 
 	model = model * translate * RotationMatrix * scaleMatrix;
 
-	view = glm::lookAt(
-		scene.GetActiveCamera()->entity->GetComponet<Transform>().position,
-		scene.GetActiveCamera()->entity->GetComponet<Transform>().position +
-		scene.GetActiveCamera()->entity->GetComponet<Transform>().Front,
-		scene.GetActiveCamera()->entity->GetComponet<Transform>().Up
-	);
 
 
 	unsigned int modelLoc = glGetUniformLocation(shader.Get(), "model");

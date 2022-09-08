@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include <glm/glm.hpp>
-#include "Component.h"
+
 #include "Components.h"
 
 #include "Rendering/Renderer.h"

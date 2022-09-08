@@ -18,9 +18,9 @@ void editor::ui::Inspector::DrawInspector()
     }
 
     ImGui::Begin(m_CurrentEntity->name.c_str());
-    ImGui::DragFloat3("Position", glm::value_ptr(m_CurrentEntity->GetComponet<Transform>().position), 0.1f);
-    ImGui::DragFloat3("Rotation", glm::value_ptr(m_CurrentEntity->GetComponet<Transform>().rotation), 0.1f);
-    ImGui::DragFloat3("Scale", glm::value_ptr(m_CurrentEntity->GetComponet<Transform>().scale), 0.1f);
+    ImGui::DragFloat3("Position", glm::value_ptr(m_CurrentEntity->GetComponent<Transform>().position), 0.1f);
+    ImGui::DragFloat3("Rotation", glm::value_ptr(m_CurrentEntity->GetComponent<Transform>().rotation), 0.1f);
+    ImGui::DragFloat3("Scale", glm::value_ptr(m_CurrentEntity->GetComponent<Transform>().scale), 0.1f);
     ImGui::End();
 
 }

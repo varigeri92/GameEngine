@@ -1,5 +1,4 @@
 #pragma once
-#include "Component.h"
 #include "glm/glm.hpp"
 
 namespace core {
@@ -18,11 +17,6 @@ public:
 	glm::mat4 GetView();
 	void OnStart();
 	void OnUpdate();
-
-
-
-	float MovementSpeed;
-	float Zoom;
 
 private:
 	float m_aspect;
