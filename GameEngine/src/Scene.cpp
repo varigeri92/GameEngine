@@ -42,6 +42,7 @@ void core::Scene::Start()
 void core::Scene::Update()
 {
 	FlyCameraUpdate(activeCamera->entity->GetComponent<Transform>(), *activeCamera);
+	UpdateView(*activeCamera, activeCamera->entity->GetComponent<Transform>());
 }
 
 void core::Scene::Render()

@@ -45,6 +45,16 @@ void core::UpdateCameraProj_Fov(CameraComponent& cameraComponent, float fov)
 		glm::perspective(glm::radians(cameraComponent.m_fov), cameraComponent.m_aspect, cameraComponent.m_near, cameraComponent.m_far);
 }
 
+void core::UpdateView(CameraComponent& cameraComponent, Transform& transform)
+{
+	cameraComponent.view = glm::lookAt(
+		transform.position,
+		transform.position +
+		transform.Front,
+		transform.Up
+	);
+}
+
 void core::FlyCameraUpdate(Transform& transform, CameraComponent& cameraComponent)
 {
 	if (Input::GetKey(SDLK_w)) {

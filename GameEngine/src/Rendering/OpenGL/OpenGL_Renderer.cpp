@@ -114,17 +114,13 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 	float aspect = (float)window->width / window->height;
 	UpdateCameraProj_Aspect(*scene.GetActiveCamera(), aspect);
 	glm::mat4 view = glm::mat4(1.0f);
-	view = glm::lookAt(
-		scene.GetActiveCamera()->entity->GetComponent<Transform>().position,
-		scene.GetActiveCamera()->entity->GetComponent<Transform>().position +
-		scene.GetActiveCamera()->entity->GetComponent<Transform>().Front,
-		scene.GetActiveCamera()->entity->GetComponent<Transform>().Up
-	);
+	view = scene.GetActiveCamera()->view;
 
 	shader.Use();
 	shader.SetMat4("projection", scene.GetActiveCamera()->proj);
 	texture.Bind();
-	//vertexBuffers[0].Bind();
+
+
 	mesh->m_vertexBuffer.Bind();
 
 	glm::mat4 model = glm::mat4(1.0f);

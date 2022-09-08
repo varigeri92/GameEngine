@@ -8,6 +8,6 @@ namespace core {
 	void UpdateCameraProj(CameraComponent& cameraComponent, float aspect, float fov, float near, float far);
 	void UpdateCameraProj_Aspect(CameraComponent& cameraComponent, float aspect);
 	void UpdateCameraProj_Fov(CameraComponent& cameraComponent, float fov);
-
+	void UpdateView(CameraComponent& cameraComponent, Transform& transform);
 	void FlyCameraUpdate(Transform& transform, CameraComponent& cameraComponent);
 }
