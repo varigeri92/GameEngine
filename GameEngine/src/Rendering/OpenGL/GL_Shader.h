@@ -15,9 +15,12 @@ public:
 	void setFloat(const std::string& name, float value) const;
 
 	void SetMat4(std::string name, glm::mat4& mat);
-	unsigned int Get() const { return shaderProgram; };
+	uint32_t GetUniformBlock(const char* name);
+	uint32_t GetUniformBlock() const { return m_uniformBlock; };
+	uint32_t Get() const { return shaderProgram; };
 
 private:
-	unsigned int shaderProgram;
+	uint32_t shaderProgram;
+	uint32_t m_uniformBlock;
 };
 

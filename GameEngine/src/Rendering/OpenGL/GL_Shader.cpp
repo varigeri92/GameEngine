@@ -110,3 +110,10 @@ void GL_Shader::SetMat4(std::string name, glm::mat4 &mat)
 {
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
+
+uint32_t GL_Shader::GetUniformBlock(const char* name)
+{
+    m_uniformBlock = glGetUniformBlockIndex(shaderProgram, name);
+    glUniformBlockBinding(shaderProgram, 0, 0);
+    return uint32_t();
+}
