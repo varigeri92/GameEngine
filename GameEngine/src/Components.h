@@ -59,6 +59,8 @@ namespace core {
 			Camera camera(aspect, fov, near, far);
 			proj = camera.GetProjection();
 			view = camera.GetView();
+
+
 		};
 
 		float m_aspect, m_fov, m_near, m_far;

@@ -10,9 +10,11 @@ namespace core
 	{
 		bool isquit{ false };
 		std::map<int, bool> keysDown;
-		std::map<int, bool> keysUp;
 		std::map<int, bool> keysHeld;
+		std::map<int, bool> keysUp;
+		
 		std::map<int, bool> mouseDown;
+		std::map<int, bool> mouseHeld;
 		std::map<int, bool> mouseUp;
 
 	};
@@ -28,6 +30,7 @@ namespace core
 		static bool GetKeyDown(int keyCode);
 		static void ProcessInput(SDL_Event& event);
 		static bool GetMouseButtonDown(int mouseButton);
+		static bool GetMouseButton(int mouseButton);
 		static bool GetMouseButtonUp(int mouseButton);
 
 		inline static glm::vec2 mousePos;

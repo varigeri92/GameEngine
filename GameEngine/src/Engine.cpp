@@ -105,7 +105,8 @@ _API int Engine::Run()
 	MeshComponent mesh = ent.AddComponet<MeshComponent>(vertices, indices);
 
 	Entity cameraEntity = scene.CreateEntity("Camera");
-	CameraComponent cameraComponent = cameraEntity.AddComponet<CameraComponent>((float)window->width / (float)window->height, 60.f, 0.1f, 1000.f); 
+	CameraComponent cameraComponent 
+		= cameraEntity.AddComponet<CameraComponent>((float)window->width / (float)window->height, 60.f, 0.1f, 1000.f); 
 	Component component = cameraEntity.AddComponet<Component>();
 
 	scene.activeCamera = &cameraComponent;
@@ -122,6 +123,7 @@ _API int Engine::Run()
 		Time::StartFrameTimer();
 		
 		Input::ProcessInput(e);
+
 		scene.Update();
 		scene.Render();
 		Time::EndFrameTimer();

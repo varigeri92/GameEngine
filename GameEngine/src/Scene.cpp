@@ -61,8 +61,7 @@ void core::Scene::Render()
 {
 	renderer->StartFrame();
 	ui->OnFrameStart();
-	/*
-	*/
+
 	auto view = m_registry.view<Transform, MeshComponent>();
 
 	for (auto entity : view)

@@ -32,14 +32,13 @@ core::Component::Component() :
 
 void core::Component::OnAwake()
 {
-
 	LOG_INFO("entitty onAwake " << entity->name);
 }
 
 void core::Component::OnStart()
 {
-	transform = &entity->GetComponet<Transform>();
 	
+	transform = &entity->GetComponet<Transform>();
 	transform->rotation.y = -90;
 	
 	transform->position.x = 0;
@@ -53,42 +52,42 @@ void core::Component::OnStart()
 void core::Component::OnUpdate()
 {
 
-	if (Input::GetKeyDown(SDLK_w)) {
+	if (Input::GetKey(SDLK_w)) {
 		v_axis = 1;
 	}
 	else if (Input::GetKeyUp(SDLK_w)) {
 		v_axis = 0;
 	}
 
-	if (Input::GetKeyDown(SDLK_s)) {
+	if (Input::GetKey(SDLK_s)) {
 		v_axis = -1;
 	}
 	else if (Input::GetKeyUp(SDLK_s)) {
 		v_axis = 0;
 	}
 
-	if (Input::GetKeyDown(SDLK_a)) {
+	if (Input::GetKey(SDLK_a)) {
 		h_axis = 1;
 	}
 	else if (Input::GetKeyUp(SDLK_a)) {
 		h_axis = 0;
 	}
 
-	if (Input::GetKeyDown(SDLK_d)) {
+	if (Input::GetKey(SDLK_d)) {
 		h_axis = -1;
 	}
 	else if (Input::GetKeyUp(SDLK_d)) {
 		h_axis = 0;
 	}
 
-	if (Input::GetKeyDown(SDLK_q)) {
+	if (Input::GetKey(SDLK_q)) {
 		u_axis = 1;
 	}
 	else if (Input::GetKeyUp(SDLK_q)) {
 		u_axis = 0;
 	}
 
-	if (Input::GetKeyDown(SDLK_e)) {
+	if (Input::GetKey(SDLK_e)) {
 		u_axis = -1;
 	}
 	else if (Input::GetKeyUp(SDLK_e)) {
@@ -100,15 +99,9 @@ void core::Component::OnUpdate()
 						-u_axis * entity->GetComponet<Transform>().Up;
 
 
-	if (Input::GetMouseButtonDown(SDL_BUTTON_RIGHT))
-		mouseDown = true;
-	if (Input::GetMouseButtonUp(SDL_BUTTON_RIGHT))
-		mouseDown = false;
-
-	if (mouseDown) {
-		LOG_INFO("Pressed!");
-		entity->GetComponet<Transform>().rotation.y += -Input::mouseVelocity.x * MouseSensitivity;
-		entity->GetComponet<Transform>().rotation.x += Input::mouseVelocity.y * MouseSensitivity;
+	if (Input::GetMouseButton(SDL_BUTTON_RIGHT)) {
+		entity->GetComponet<Transform>().rotation.y += -Input::mouseVelocity.x * MouseSensitivity * Time::GetDelta();
+		entity->GetComponet<Transform>().rotation.x += Input::mouseVelocity.y * MouseSensitivity * Time::GetDelta();
 	}
 
 	entity->GetComponet<Transform>().position += movement * Time::GetDelta() * speed;

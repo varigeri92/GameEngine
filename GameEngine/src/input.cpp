@@ -22,9 +22,14 @@ namespace core
 
 	void Input::ProcessInput(SDL_Event& event)
     {
-		//previousFrameInput = FrameInput(frameInput);
-		frameInput = {};
-		p_mousePos = mousePos;
+		frameInput.keysDown.clear();
+		frameInput.keysUp.clear();
+
+		frameInput.mouseDown.clear();
+		frameInput.mouseUp.clear();
+
+		p_mousePos.x = mousePos.x;
+		p_mousePos.y = mousePos.y;
 
 		/*
 		if (mousePos.x < 0) {
@@ -56,16 +61,21 @@ namespace core
 				frameInput.isquit = true;
 				return;
 			case SDL_KEYDOWN:
-				frameInput.keysDown[event.key.keysym.sym] = true;
+				if(!frameInput.keysDown[event.key.keysym.sym])
+					frameInput.keysDown[event.key.keysym.sym] = true;
+				frameInput.keysHeld[event.key.keysym.sym] = true;
 				break;
 			case SDL_KEYUP:
 				frameInput.keysUp[event.key.keysym.sym] = true;
+				frameInput.keysHeld[event.key.keysym.sym] = false;
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				frameInput.mouseDown[event.button.button] = true;
+				frameInput.mouseHeld[event.button.button] = true;
 				break;
 			case SDL_MOUSEBUTTONUP:
 				frameInput.mouseUp[event.button.button] = true;
+				frameInput.mouseHeld[event.button.button] = false;
 				break;
 			case SDL_MOUSEMOTION:
 				mousePos.x = event.motion.x;
@@ -87,5 +97,10 @@ namespace core
 	bool Input::GetMouseButtonUp(int mouseButton)
 	{
 		return frameInput.mouseUp[mouseButton];
+	}
+
+	bool Input::GetMouseButton(int mouseButton)
+	{
+		return frameInput.mouseHeld[mouseButton];
 	}
 }

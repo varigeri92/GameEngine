@@ -154,7 +154,6 @@
     <ClCompile Include="src\ImGui\imgui_tables.cpp" />
     <ClCompile Include="src\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />
-    <ClCompile Include="src\Drawable.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Rendering\OpenGL\GL_Texture.cpp" />
@@ -186,7 +185,6 @@
     <ClInclude Include="src\ImGui\imstb_textedit.h" />
     <ClInclude Include="src\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\Rendering\Camera.h" />
-    <ClInclude Include="src\Drawable.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Rendering\OpenGL\GL_Texture.h" />

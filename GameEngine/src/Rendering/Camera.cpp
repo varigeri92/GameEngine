@@ -16,11 +16,7 @@ Camera::Camera(float aspect, float fov, float near, float far) :
 	m_aspect{ aspect },
 	m_fov	{ fov },
 	m_near	{ near },
-	m_far	{ far },
-	v_axis	{ 0 },
-	u_axis { 0 },
-	h_axis	{ 0 },
-	mouseDown{ false }
+	m_far	{ far }
 {}
 
 
@@ -62,50 +58,6 @@ void Camera::OnStart()
 
 void Camera::OnUpdate()
 {
-	//Component::OnUpdate();
-	if (Input::GetKeyDown(SDLK_w)) {
-		v_axis = 1;
-	}
-	else if (Input::GetKeyUp(SDLK_w)) {
-		v_axis = 0;
-	}
-
-	if (Input::GetKeyDown(SDLK_s)) {
-		v_axis = -1;
-	}
-	else if (Input::GetKeyUp(SDLK_s)) {
-		v_axis = 0;
-	}
-
-	if (Input::GetKeyDown(SDLK_a)) {
-		h_axis = 1;
-	}
-	else if (Input::GetKeyUp(SDLK_a)) {
-		h_axis = 0;
-	}
-
-	if (Input::GetKeyDown(SDLK_d)) {
-		h_axis = -1;
-	}
-	else if (Input::GetKeyUp(SDLK_d)) {
-		h_axis = 0;
-	}
-
-	if (Input::GetKeyDown(SDLK_q)) {
-		u_axis = 1;
-	}
-	else if (Input::GetKeyUp(SDLK_q)) {
-		u_axis = 0;
-	}
-
-	if (Input::GetKeyDown(SDLK_e)) {
-		u_axis = -1;
-	}
-	else if (Input::GetKeyUp(SDLK_e)) {
-		u_axis = 0;
-	}
-
-
 
 	/*
 	glm::vec3 movement = v_axis * GetTransform()->Front + 

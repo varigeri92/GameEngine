@@ -6,7 +6,6 @@
 #include <glm/glm.hpp>
 #include "Component.h"
 #include "Components.h"
-#include "Drawable.h"
 
 #include "Rendering/Renderer.h"
 #include "Rendering/Camera.h"

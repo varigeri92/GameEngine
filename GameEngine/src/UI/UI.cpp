@@ -19,10 +19,6 @@ void UI::InitGUI(Window* window)
     //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-
-    // Setup Platform/Renderer bindings
-    // window is the SDL_Window*
-    // context is the SDL_GLContext
     ImGui_ImplSDL2_InitForOpenGL(window->GetWindow(), window->GetContext());
     ImGui_ImplOpenGL3_Init();
 }

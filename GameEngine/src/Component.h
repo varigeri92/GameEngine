@@ -32,7 +32,7 @@ namespace core
 		
 		bool mouseDown;
 		float v_axis, h_axis, u_axis;
-		float MouseSensitivity = 3.f;
+		float MouseSensitivity = 1500.f;
 		float speed = 5.f;
 
 		friend class Engine;

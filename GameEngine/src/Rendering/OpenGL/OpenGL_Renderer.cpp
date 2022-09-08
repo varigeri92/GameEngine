@@ -15,7 +15,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Components.h"
-#include "Drawable.h"
 #include "Entity.h"
 #include "Scene.h"
 #include "UI/UI.h"
@@ -111,12 +110,10 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 	glViewport(0, 0, window->width, window->height);
 
 	float aspect = (float)window->width / window->height;
+	
 
 	shader.Use();
-	glm::mat4 projection = glm::mat4(1.0f);
-	projection = scene.GetActiveCamera()->proj;
-	shader.SetMat4("projection", projection);
-
+	shader.SetMat4("projection", scene.GetActiveCamera()->proj);
 	texture.Bind();
 	//vertexBuffers[0].Bind();
 	mesh->m_vertexBuffer.Bind();
