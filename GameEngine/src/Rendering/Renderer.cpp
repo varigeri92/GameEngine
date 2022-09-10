@@ -15,7 +15,7 @@ void Renderer::Draw(MeshComponent* mesh, core::Transform transform, core::Scene&
 	openGL_Renderer.Draw(mesh, transform, scene );
 }
 
-void Renderer::StartFrame()
+void Renderer::StartFrame(core::Scene& scene)
 {
-	openGL_Renderer.StartFrame();
+	openGL_Renderer.StartFrame(scene);
 }

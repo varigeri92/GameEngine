@@ -145,8 +145,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CameraSystem.cpp" />
-    <ClCompile Include="GL_UniformBuffer.cpp" />
+    <ClCompile Include="src\UI\Outliner.cpp" />
+    <ClCompile Include="src\CameraSystem.cpp" />
+    <ClCompile Include="src\Rendering\OpenGL\GL_UniformBuffer.cpp" />
     <ClCompile Include="src\UI\inspector.cpp" />
     <ClCompile Include="src\ImGui\imgui.cpp" />
     <ClCompile Include="src\ImGui\imgui_demo.cpp" />
@@ -173,8 +174,9 @@
   <ItemGroup>
     <ClInclude Include="API\Engine.h" />
     <ClInclude Include="API\Log.h" />
-    <ClInclude Include="CameraSystem.h" />
-    <ClInclude Include="GL_UniformBuffer.h" />
+    <ClInclude Include="src\UI\Outliner.h" />
+    <ClInclude Include="src\CameraSystem.h" />
+    <ClInclude Include="src\Rendering\OpenGL\GL_UniformBuffer.h" />
     <ClInclude Include="src\AssetPath.h" />
     <ClInclude Include="src\Components.h" />
     <ClInclude Include="src\UI\inspector.h" />

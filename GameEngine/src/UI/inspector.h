@@ -2,6 +2,13 @@
 #include <string>
 #include <vector>
 #include "Entity.h"
+#include "entt/entt.hpp"
+
+
+namespace core
+{
+	class Scene;
+};
 
 
 namespace editor::ui
@@ -29,12 +36,16 @@ namespace editor::ui
 	class Inspector
 	{
 	public:
-		Inspector(core::Entity* entity);
-		//Inspector(core::Transform* t);
+		Inspector(core::Scene& _scene);
+		Inspector();
+
+		void SelectEntity(entt::entity);
+		void SelectEntity(core::Entity);
 		void DrawInspector();
 
+		core::Scene* m_scene;
+		core::Entity m_entity;
 	private:
-		core::Entity* m_CurrentEntity;
 	};
 }
 

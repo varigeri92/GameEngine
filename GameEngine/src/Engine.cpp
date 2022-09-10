@@ -47,7 +47,6 @@ int Engine::InitEngine() {
 	renderer = new Renderer();
 	renderer->InitRenderer(window);
 
-	
 	LOG_INFO("Engine Ready!");
 	return err;
 }
@@ -61,18 +60,14 @@ _API int Engine::Run()
 	//test:
 	Assimp::Importer importer;
 
-	
 	std::vector<Vertex> vertices;
 	std::vector<uint32_t> indices;
+	
 	const aiScene* aiScene = importer.ReadFile(ASSETS_PATH "Models\\untitled.glb", aiProcess_JoinIdenticalVertices);
 	if (aiScene) 
 	{
-		LOG_INFO("Import Sucessfull");
 		for (size_t i = 0; i < aiScene->mNumMeshes; i++)
 		{
-			LOG_INFO("imported mesh name: " << aiScene->mMeshes[i]->mName.C_Str());
-			
-			//indices.resize(aiScene->mMeshes[i]->mNumFaces);
 			for (size_t v = 0; v < aiScene->mMeshes[i]->mNumVertices; v++)
 			{
 				core::Vertex vertex;
@@ -89,7 +84,6 @@ _API int Engine::Run()
 				{
 					indices.push_back(static_cast<uint32_t>(aiScene->mMeshes[i]->mFaces[f].mIndices[ind]));
 				}
-				
 			}
 		}
 	}
@@ -98,14 +92,20 @@ _API int Engine::Run()
 		LOG_ERROR(importer.GetErrorString());
 	}
 	
-	Entity ent = scene.CreateEntity("entity");
-	MeshComponent mesh = ent.AddComponet<MeshComponent>(vertices, indices);
+	{
+		Entity ent = scene.CreateEntity("entity");
+		ent.AddComponet<MeshComponent>(vertices, indices);
 
-	Entity cameraEntity = scene.CreateEntity("Camera");
-	CameraComponent cameraComponent 
-		= cameraEntity.AddComponet<CameraComponent>((float)window->width / (float)window->height, 60.f, 0.1f, 1000.f); 
 
-	scene.activeCamera = &cameraComponent;
+		Entity empty = scene.CreateEntity("Empty Entity");
+		ent.GetComponent<Transform>().parent = &empty.GetComponent<Transform>();
+
+		Entity cameraEntity = scene.CreateEntity("Camera");
+		CameraComponent cameraComponent 
+			= cameraEntity.AddComponet<CameraComponent>((float)window->width / (float)window->height, 60.f, 0.1f, 1000.f); 
+		scene.cameraEntity = cameraEntity.m_entity;
+		scene.activeCamera = &cameraComponent;
+	}
 
 
 	scene.Awake();

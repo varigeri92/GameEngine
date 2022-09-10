@@ -81,10 +81,13 @@
     <ClCompile Include="src\UI\inspector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraSystem.cpp">
+    <ClCompile Include="src\CameraSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GL_UniformBuffer.cpp">
+    <ClCompile Include="src\Rendering\OpenGL\GL_UniformBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Outliner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,10 +170,13 @@
     <ClInclude Include="src\AssetPath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CameraSystem.h">
+    <ClInclude Include="src\CameraSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GL_UniformBuffer.h">
+    <ClInclude Include="src\Rendering\OpenGL\GL_UniformBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Outliner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

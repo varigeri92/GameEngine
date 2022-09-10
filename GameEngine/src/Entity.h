@@ -9,21 +9,25 @@
 
 
 namespace core {
-	class Scene;
-
 	struct Entity
 	{
 		Entity(std::string name, Scene& _scene, entt::entity entity) :
-			name{ name },
 			scene{ &_scene },
 			m_entity{ entity }
 		{};
+
+		Entity(entt::entity entity, Scene& _scene) :
+			m_entity	{ entity  },
+			scene		{ &_scene }
+		{};
+
+		Entity() = default;
+		~Entity();
 
 		template<typename T, typename... Args>
 		T& AddComponet(Args&& ... args)
 		{
 			T& component = scene->m_registry.emplace<T>(m_entity, std::forward<Args>(args)...);
-			component.entity = &*this;
 			return component;
 		}
 		template<typename T>
@@ -32,10 +36,14 @@ namespace core {
 			return scene->m_registry.get<T>(m_entity);
 		}
 
-		std::string name;
-		entt::entity m_entity;
+		template<typename T>
+		bool TryGetComponent(T& component)
+		{
+			component = scene->m_registry.get<T>(m_entity);
+			return true;
+		}
 
-		uint64_t UUID;
+		entt::entity m_entity;
 		Scene* scene;
 	
 	};

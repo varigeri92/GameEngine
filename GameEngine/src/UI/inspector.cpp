@@ -4,23 +4,46 @@
 #include "glm/glm.hpp"
 #include "Log.h"
 #include "Components.h"
+#include "entt/entt.hpp"
 
-
-editor::ui::Inspector::Inspector(core::Entity* entity) : m_CurrentEntity { entity }{}
+#include "Log.h"
 
 using namespace core;
 
+
+editor::ui::Inspector::Inspector(core::Scene& _scene) : 
+    m_scene { &_scene }
+{}
+
+editor::ui::Inspector::Inspector() 
+{
+    LOG_INFO("Created Inspector no Scene!");
+}
+
+void editor::ui::Inspector::SelectEntity(entt::entity entity)
+{
+    LOG_INFO("SELECTED!");
+    m_entity = { entity, *m_scene };
+}
+
+void editor::ui::Inspector::SelectEntity(core::Entity entity)
+{
+    m_entity = { entity };
+}
+
 void editor::ui::Inspector::DrawInspector()
 {
-    if (!m_CurrentEntity) { 
-        LOG_INFO("current entity is nullptr");
-        return;
-    }
+    ImGui::Begin("Inspector");
+    
+    if (m_entity.m_entity == entt::null) return;
 
-    ImGui::Begin(m_CurrentEntity->name.c_str());
-    ImGui::DragFloat3("Position", glm::value_ptr(m_CurrentEntity->GetComponent<Transform>().position), 0.1f);
-    ImGui::DragFloat3("Rotation", glm::value_ptr(m_CurrentEntity->GetComponent<Transform>().rotation), 0.1f);
-    ImGui::DragFloat3("Scale", glm::value_ptr(m_CurrentEntity->GetComponent<Transform>().scale), 0.1f);
+    ImGui::Text(m_entity.GetComponent<EntityComponent>().name.c_str());
+    ImGui::Separator();
+    Transform transform = m_entity.GetComponent<Transform>();
+    ImGui::DragFloat3("Position", glm::value_ptr(transform.position), 0.01f);
+    ImGui::DragFloat3("Rotation", glm::value_ptr(transform.rotation), 0.01f);
+    ImGui::DragFloat3("Scale", glm::value_ptr(transform.scale), 0.01f);
+    ImGui::Separator();
+
     ImGui::End();
-
 }

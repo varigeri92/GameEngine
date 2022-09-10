@@ -6,10 +6,20 @@
 
 #include "Rendering/OpenGL/GL_VertexBuffer.h"
 #include "Rendering/Camera.h"
+#include <string>
 
 namespace core {
 
 	struct Entity;
+
+	struct EntityComponent
+	{
+		EntityComponent(std::string _name) : 
+			name{ _name } 
+		{};
+
+		std::string name;
+	};
 
 	struct Transform
 	{
@@ -17,9 +27,7 @@ namespace core {
 			position{ 0.0f, 0.0f, 0.0f },
 			rotation{ 0.0f, 0.0f, 0.0f },
 			scale{ 1.f, 1.f, 1.f }
-		{
-			LOG_INFO("Transform ComponentCreated! With default parameters ");
-		}
+		{}
 
 		glm::vec3 position;
 		glm::vec3 rotation;
@@ -34,7 +42,7 @@ namespace core {
 		glm::mat4 model{};
 		glm::mat4 view{};
 
-		Entity* entity = nullptr;
+		Transform* parent = nullptr;
 	};
 
 	struct MeshComponent
@@ -47,8 +55,6 @@ namespace core {
 		GL_VertexBuffer m_vertexBuffer;
 		std::vector<Vertex> m_vertices;
 		std::vector<uint32_t> m_indices;
-
-		Entity* entity = nullptr;
 	};
 
 	struct CameraComponent
@@ -74,6 +80,5 @@ namespace core {
 		float MouseSensitivity = 1500.f;
 		float speed = 5.f;
 
-		Entity* entity = nullptr;
 	};
 }
