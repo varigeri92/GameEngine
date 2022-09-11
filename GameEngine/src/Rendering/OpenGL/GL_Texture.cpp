@@ -2,7 +2,7 @@
 #include "stb_image.h"
 #include "GL/glew.h"
 #include "Log.h"
-GL_Texture::GL_Texture(const char* path)
+GL_Texture::GL_Texture(const char* path) : terxturePath { path }
 {
 	glGenTextures(1, &texture_ID);
 	glBindTexture(GL_TEXTURE_2D, texture_ID);
@@ -25,6 +25,7 @@ GL_Texture::GL_Texture(const char* path)
 	}
 	stbi_image_free(data);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void GL_Texture::Bind()

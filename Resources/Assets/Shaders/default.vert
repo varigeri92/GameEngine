@@ -23,6 +23,10 @@ layout (std140, binding = 1) uniform Lights
     vec4 color;
 }; 
 
+layout (std140, binding = 2) uniform ambient
+{
+    vec4 ambientColor;
+};
 
 
 uniform mat4 model;

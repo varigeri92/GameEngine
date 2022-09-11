@@ -18,6 +18,18 @@ struct GL_Lights
 	glm::vec4 Color {1.f, 1.f, 1.f, 1.f };	// W = intensity
 };
 
+
+struct GL_Ambient
+{
+	glm::vec4 Color{ 1.f, 1.f, 1.f, 1.f };	// W = intensity
+};
+
+struct Gl_Transform
+{
+	std::vector<glm::mat4> modelMatrices;
+	uint32_t count;
+};
+
 template<class T>
 class GL_UniformBuffer
 {

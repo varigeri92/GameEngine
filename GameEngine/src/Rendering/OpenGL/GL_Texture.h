@@ -9,5 +9,6 @@ public:
 	int width, height, nrChannels;
 private:
 	unsigned int texture_ID;
+	const char* terxturePath;
 };
 

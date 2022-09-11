@@ -5,8 +5,13 @@
 #include "Log.h"
 
 #include "Rendering/OpenGL/GL_VertexBuffer.h"
+#include "Rendering/OpenGL/GL_Texture.h"
+#include "Rendering/OpenGL/GL_Shader.h"
+
 #include "Rendering/Camera.h"
 #include <string>
+#include <memory>
+#include <Rendering/Material.h>
 
 
 typedef glm::vec3 Color;
@@ -55,10 +60,13 @@ namespace core {
 			m_vertices{ vertices }, 
 			m_indices{ indices }
 		{
-			m_vertexBuffer.CreateBuffer(vertices, indices);
+			m_vertexBuffer->CreateBuffer(vertices, indices);
 		}
+
+		MeshComponent(){}
 	
-		GL_VertexBuffer m_vertexBuffer;
+		std::shared_ptr<Material> material = nullptr;
+		std::shared_ptr<GL_VertexBuffer> m_vertexBuffer;
 		std::vector<Vertex> m_vertices;
 		std::vector<uint32_t> m_indices;
 	};
@@ -99,5 +107,4 @@ namespace core {
 		Color lightColor;
 		float lightIntensity;
 	};
-
 }

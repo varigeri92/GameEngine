@@ -39,7 +39,10 @@ namespace core
 		//TEMP:
 		DirectionalLight* Light;
 		Transform* LightTransform;
+		Ambient* ambient;
 		//
+		uint32_t m_drawCalls = 0;
+		uint32_t m_batches = 0;
 
 	private:
 		void CreateScene(Renderer* renderer, core::ui::UI &ui);

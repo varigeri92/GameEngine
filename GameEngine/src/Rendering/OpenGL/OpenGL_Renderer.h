@@ -24,5 +24,6 @@ private:
 	Window* window;
 	std::unique_ptr<GL_UniformBuffer<GL_GlobalMatrixObject>> m_glUniforms;
 	std::unique_ptr<GL_UniformBuffer<GL_Lights>> m_glLights;
+	std::unique_ptr<GL_UniformBuffer<GL_Ambient>> m_glAmbient;
 };
 

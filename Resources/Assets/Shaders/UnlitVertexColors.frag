@@ -20,11 +20,7 @@ layout (std140, binding = 1) uniform Lights
     vec4 color;
 }; 
 
-layout (std140, binding = 2) uniform ambient
-{
-    vec4 ambientColor;
-};
-
+vec4 ambient = vec4(1, 1, 1, 1);
 void main()
 {
     vec3 norm = normalize(Normal);
@@ -32,7 +28,7 @@ void main()
     float light = dot(norm, ligthtdir);
     light *= color.w;
 
-    vec4 outColor = (vec4(VertexColor, 1) * light) + (vec4(ambientColor.xyz, 1 ) * ambientColor.w);
+    vec4 outColor = (vec4(VertexColor, 1) * light) + (vec4(ambient.xyz, 1 ) * ambient.w);
     
-    FragColor = texture(u_Texture, TexCoord) * color * outColor;
+    FragColor = vec4(VertexColor, 1); // texture(u_Texture, TexCoord) * color * outColor;
 }

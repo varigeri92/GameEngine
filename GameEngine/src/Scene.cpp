@@ -17,6 +17,7 @@
 #include "entt/entt.hpp"
 
 #include "ImGui/imgui.h"
+#include "EngineTime.h"
 
 
 editor::ui::Inspector inspector;
@@ -93,12 +94,28 @@ void core::Scene::Render()
 	ImGui::Begin("light");
 
 	ImGui::Separator();
-	ImGui::DragFloat("intensity", &Light->lightIntensity, 0.01f);
+	ImGui::SliderFloat("intensity", &Light->lightIntensity, 0, 2.f);
 	ImGui::ColorEdit3("color", glm::value_ptr(Light->lightColor));
+	
+	ImGui::Separator();
+
+	ImGui::SliderFloat("ambient_intensity", &ambient->intensity, 0, 2.f);
+	ImGui::ColorEdit3("ambient_color", glm::value_ptr(ambient->ambientColor));
 	ImGui::Separator();
 
 	ImGui::End();
 
+	ImGui::Begin("FPS");
+
+	std::string frametime = "Frame time: " + std::to_string(Time::GetDelta());
+	std::string fps = "Frame count: " + std::to_string(1 / Time::GetDelta());
+	std::string drawCalls = "Draw Calls: " + std::to_string(m_drawCalls);
+	std::string batches = "Batches: " + std::to_string(m_batches);
+	ImGui::Text(frametime.c_str());
+	ImGui::Text(fps.c_str());
+	ImGui::Text(drawCalls.c_str());
+	ImGui::Text(batches.c_str());
+	ImGui::End();
 
 	ui->DrawGUI();
 }
