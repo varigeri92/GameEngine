@@ -35,6 +35,12 @@ namespace core
 		CameraComponent* GetActiveCamera() const { return activeCamera; };
 
 		entt::registry m_registry;
+
+		//TEMP:
+		DirectionalLight* Light;
+		Transform* LightTransform;
+		//
+
 	private:
 		void CreateScene(Renderer* renderer, core::ui::UI &ui);
 
@@ -53,10 +59,13 @@ namespace core
 		friend class Engine;
 		core::ui::UI* ui;
 
+		//TEMP:
+
 		//test:
 		uint32_t current;
-
 		editor::ui::Outliner outliner;
+
+
 		
 	};
 

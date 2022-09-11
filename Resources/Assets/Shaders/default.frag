@@ -1,16 +1,35 @@
 #version 450 core
 out vec4 FragColor;
   
-in vec3 ourColor;
+in vec3 VertexColor;
 in vec2 TexCoord;
+in vec3 Normal;
+in vec3 FragPos;
+
+uniform sampler2D u_Texture;
+
 layout (std140, binding = 0) uniform ViewProj
 {
     mat4 view;
     mat4 proj;
-}; 
-uniform sampler2D ourTexture;
+};
 
+layout (std140, binding = 1) uniform Lights
+{
+    vec4 direction;
+    vec4 color;
+}; 
+
+vec4 ambient = vec4(1, 1, 1, 1);
 void main()
 {
-    FragColor = texture(ourTexture, TexCoord);
+    vec3 norm = normalize(Normal);
+    vec3 ligthtdir = normalize(direction.xyz);
+    float light = dot(norm, ligthtdir);
+    light *= color.w;
+
+    vec4 outColor = (vec4(VertexColor, 1) * light) + 
+        (vec4(ambient.xyz, 1 ) * ambient.w);
+    
+    FragColor = texture(u_Texture, TexCoord) * color * outColor;
 }

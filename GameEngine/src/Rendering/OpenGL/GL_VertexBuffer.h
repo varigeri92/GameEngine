@@ -9,6 +9,7 @@ namespace core
 		glm::vec3 position;
 		glm::vec3 color;
 		glm::vec2 UV;
+		glm::vec3 normal;
 	};
 }
 

@@ -8,6 +8,10 @@
 #include "Rendering/Camera.h"
 #include <string>
 
+
+typedef glm::vec3 Color;
+typedef glm::vec4 Color4;
+
 namespace core {
 
 	struct Entity;
@@ -47,7 +51,9 @@ namespace core {
 
 	struct MeshComponent
 	{
-		MeshComponent(std::vector<Vertex> vertices, std::vector<uint32_t> indices) : m_vertices{ vertices }, m_indices{ indices }
+		MeshComponent(std::vector<Vertex> vertices, std::vector<uint32_t> indices) : 
+			m_vertices{ vertices }, 
+			m_indices{ indices }
 		{
 			m_vertexBuffer.CreateBuffer(vertices, indices);
 		}
@@ -81,4 +87,17 @@ namespace core {
 		float speed = 5.f;
 
 	};
+
+	struct Ambient
+	{
+		Color ambientColor;
+		float intensity;
+	};
+
+	struct DirectionalLight
+	{
+		Color lightColor;
+		float lightIntensity;
+	};
+
 }

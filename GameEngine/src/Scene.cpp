@@ -16,6 +16,8 @@
 #include "UI/Inspector.h"
 #include "entt/entt.hpp"
 
+#include "ImGui/imgui.h"
+
 
 editor::ui::Inspector inspector;
 
@@ -87,6 +89,16 @@ void core::Scene::Render()
 
 	outliner.DrawOutliner();
 	inspector.DrawInspector();
+
+	ImGui::Begin("light");
+
+	ImGui::Separator();
+	ImGui::DragFloat("intensity", &Light->lightIntensity, 0.01f);
+	ImGui::ColorEdit3("color", glm::value_ptr(Light->lightColor));
+	ImGui::Separator();
+
+	ImGui::End();
+
 
 	ui->DrawGUI();
 }

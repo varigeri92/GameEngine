@@ -52,7 +52,9 @@ GL_Shader shader;
 GL_Texture texture;
 
 //std::vector<GL_VertexBuffer> vertexBuffers;
-GL_UniformBuffer glUniforms;
+GL_GlobalMatrixObject glMatrices{};
+GL_Lights glLights {};
+
 
 void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
 	if(type == GL_DEBUG_TYPE_ERROR)
@@ -92,19 +94,29 @@ void OpenGL_Renderer::InitRenderer(Window* window)
 
 	shader = GL_Shader(ASSETS_PATH"Shaders\\default.vert",
 		ASSETS_PATH"Shaders\\default.frag");
-
+	/*
 	glGenBuffers(1, &glUniforms.m_glBuffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, glUniforms.m_glBuffer);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(glUniforms.m_ubo), nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	*/
 
-	shader.GetUniformBlock("ViewProj");
+	//uint32_t bindingBlockID = shader.GetUniformBlock("ViewProj");
+	//LOG_INFO("Block Binding: 'ViewProj': " << bindingBlockID);
+	//bindingBlockID = shader.GetUniformBlock("Lights");
+	//LOG_INFO("Block Binding: 'Lights': " << bindingBlockID);
+
 	texture = { ASSETS_PATH"Textures\\Suzanne.jpg" };
-
+	{
+		//GL_UniformBuffer<GL_GlobalMatrixObject> glUniforms{sizeof(glMatrices)};
+		m_glUniforms = std::make_unique<GL_UniformBuffer<GL_GlobalMatrixObject>>(sizeof(glMatrices));
+		m_glLights = std::make_unique<GL_UniformBuffer<GL_Lights>>(sizeof(glLights));
+	}
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
+
 }
 
 void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene& scene)
@@ -113,7 +125,7 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 	texture.Bind();
 	mesh->m_vertexBuffer.Bind();
 
-
+	// Update Matrices:
 	glm::mat4 translate = glm::translate(glm::mat4(1), transform.position);
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1), transform.scale);
 	glm::vec3 EulerAngles(
@@ -128,6 +140,9 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 	unsigned int modelLoc = glGetUniformLocation(shader.Get(), "model");
 	unsigned int viewLoc = glGetUniformLocation(shader.Get(), "view");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	//----------------________________---------------------------//
+
+
 
 	glDrawElements(GL_TRIANGLES, mesh->m_vertexBuffer.GetIndexCount(), GL_UNSIGNED_INT, 0);
 }
@@ -142,6 +157,23 @@ void OpenGL_Renderer::StartFrame(core::Scene& scene)
 	glViewport(0, 0, window->width, window->height);
 	float aspect = (float)window->width / window->height;
 	UpdateCameraProj_Aspect(*scene.GetActiveCamera(), aspect);
+	glMatrices.proj = scene.GetActiveCamera()->proj;
+	glMatrices.view = scene.GetActiveCamera()->view;
 
-	glUniforms.UpdateUBO(scene.GetActiveCamera()->view, scene.GetActiveCamera()->proj).Bind();
+
+	m_glUniforms->UpdateUBO(glMatrices, 0);
+
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(scene.LightTransform->rotation.y)) * cos(glm::radians(scene.LightTransform->rotation.x));
+	front.y = sin(glm::radians(scene.LightTransform->rotation.x));
+	front.z = sin(glm::radians(scene.LightTransform->rotation.y)) * cos(glm::radians(scene.LightTransform->rotation.x));
+	scene.LightTransform->Front = glm::normalize(front);
+	scene.LightTransform->Right = glm::normalize(glm::cross(scene.LightTransform->Front, scene.LightTransform->WorldUp));
+	scene.LightTransform->Up = glm::normalize(glm::cross(scene.LightTransform->Right, scene.LightTransform->Front));
+
+	glLights.direction = { scene.LightTransform->Front.x,scene.LightTransform->Front.y, scene.LightTransform->Front.z, 0};
+	glLights.Color = { scene.Light->lightColor.r, scene.Light->lightColor.g, scene.Light->lightColor.b, scene.Light->lightIntensity };
+	m_glLights->UpdateUBO(glLights, 1);
+	
 }

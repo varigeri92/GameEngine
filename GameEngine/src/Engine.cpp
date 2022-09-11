@@ -72,9 +72,9 @@ _API int Engine::Run()
 			{
 				core::Vertex vertex;
 				vertex.position = { aiScene->mMeshes[i]->mVertices[v].x, aiScene->mMeshes[i]->mVertices[v].y, aiScene->mMeshes[i]->mVertices[v].z };
-				vertex.color = { 1.f, 1.f, 1.f, };
+				vertex.color = { 1.f, 1.f, 1.f };
 				vertex.UV = { aiScene->mMeshes[i]->mTextureCoords[0][v].x, aiScene->mMeshes[i]->mTextureCoords[0][v].y };
-
+				vertex.normal = { aiScene->mMeshes[i]->mNormals[v].x, aiScene->mMeshes[i]->mNormals[v].y, aiScene->mMeshes[i]->mNormals[v].z };
 				vertices.push_back(vertex);
 			}
 			for (size_t f = 0; f < aiScene->mMeshes[i]->mNumFaces; f++)
@@ -97,8 +97,10 @@ _API int Engine::Run()
 		ent.AddComponet<MeshComponent>(vertices, indices);
 
 
-		Entity empty = scene.CreateEntity("Empty Entity");
-		ent.GetComponent<Transform>().parent = &empty.GetComponent<Transform>();
+		Entity empty = scene.CreateEntity("Directional Light");		
+		scene.Light = &empty.AddComponet<DirectionalLight>();
+		scene.LightTransform = &empty.GetComponent<Transform>();
+
 
 		Entity cameraEntity = scene.CreateEntity("Camera");
 		CameraComponent cameraComponent 
