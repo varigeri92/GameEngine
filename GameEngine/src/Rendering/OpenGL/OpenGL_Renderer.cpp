@@ -109,6 +109,14 @@ void OpenGL_Renderer::InitRenderer(Window* window)
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
+	GLint max_vector = 0;
+	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_VECTORS, &max_vector);
+	LOG_INFO("MaximumCount of Matrices / Vertex Shader: " << max_vector / 4);
+
+	// Max BatchSize
+	// Current BatchSize
+	//Array of mat4
+
 }
 
 void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene& scene)
@@ -138,6 +146,8 @@ void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene
 	scene.m_drawCalls++;
 	glDrawElements(GL_TRIANGLES, mesh->m_vertexBuffer->GetIndexCount(), GL_UNSIGNED_INT, 0);
 	mesh->m_vertexBuffer->UnBind();
+;
+
 	//mesh->material->mainTexture->UnBind();
 	//mesh->material->shader->UnBind();
 

@@ -16,7 +16,6 @@ layout (std140, binding = 0) uniform ViewProj
     mat4 proj;
 };
 
-
 layout (std140, binding = 1) uniform Lights
 {
     vec4 direction;
@@ -27,6 +26,7 @@ layout (std140, binding = 2) uniform ambient
 {
     vec4 ambientColor;
 };
+
 
 
 uniform mat4 model;

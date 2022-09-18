@@ -113,9 +113,9 @@ _API int Engine::Run()
 	auto suzannMaterial = std::make_shared<Material>(shader);
 	auto suzannMaterial_2 = std::make_shared<Material>(shader);
 
-	size_t width = 10;
-	size_t height = 10;
-	size_t depth = 10;
+	size_t width = 1;
+	size_t height = 1;
+	size_t depth = 1;
 
 	float distance = 3.5f;
 
@@ -131,6 +131,7 @@ _API int Engine::Run()
 		mc1.material = suzannMaterial_2;
 		uint32_t bid = 0;
 
+		auto _vertices = std::vector<Vertex>();
 
 		glm::vec3 offset = { 0,0,0 };
 		for (size_t w = 0; w < width; w++)
@@ -141,14 +142,21 @@ _API int Engine::Run()
 				{
 
 					offset = { (float)w, (float)h, (float)d };
-
+					_vertices.clear();
 					for (size_t i = 0; i < vertices.size(); i++)
 					{
-						vertices[i].position += offset * distance;
+						Vertex vertex{
+							{vertices[i].position + (offset * distance)},
+							{vertices[i].color},
+							{vertices[i].UV},
+							{vertices[i].normal},
+						};
+						_vertices.push_back(vertex);
 
 					}
 					LOG_INFO("OFFSET: " << offset.x << " / " << offset.y << " / " << offset.z);
-					bid = mc1.m_vertexBuffer->Push(vertices, indices);
+					bid = mc1.m_vertexBuffer->Push(_vertices, indices);
+
 
 					/*
 					Entity ent1 = scene.CreateEntity("Suzann_" + std::to_string(d) + "_" + std::to_string(h) + "_" +std::to_string(w));
