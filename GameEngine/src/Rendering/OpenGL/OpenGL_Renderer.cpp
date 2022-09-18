@@ -91,19 +91,12 @@ void OpenGL_Renderer::InitRenderer(Window* window)
 	glDebugMessageCallback(MessageCallback, 0);
 	LOG_INFO("GLEW:: Using GLEW: " << glewGetString(GLEW_VERSION));
 
-
-	/*
-	shader = GL_Shader(ASSETS_PATH"Shaders\\default.vert",
-		ASSETS_PATH"Shaders\\default.frag");
-
-	texture = { ASSETS_PATH"Textures\\Suzann.jpg" };
-	*/
-
 	{
 		m_glUniforms = std::make_unique<GL_UniformBuffer<GL_GlobalMatrixObject>>(sizeof(glMatrices));
 		m_glLights = std::make_unique<GL_UniformBuffer<GL_Lights>>(sizeof(glLights));
 		m_glAmbient = std::make_unique<GL_UniformBuffer<GL_Ambient>>(sizeof(gl_Ambient));
 	}
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -112,11 +105,6 @@ void OpenGL_Renderer::InitRenderer(Window* window)
 	GLint max_vector = 0;
 	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_VECTORS, &max_vector);
 	LOG_INFO("MaximumCount of Matrices / Vertex Shader: " << max_vector / 4);
-
-	// Max BatchSize
-	// Current BatchSize
-	//Array of mat4
-
 }
 
 void OpenGL_Renderer::Draw(core::MeshComponent* mesh, Transform transform, Scene& scene)

@@ -1,6 +1,6 @@
 #pragma once
 #include "Components.h"
-#include "glm/glm.hpp";
+#include "glm/glm.hpp"
 
 namespace core {
 	void InitCameraTransform(Transform& transform, glm::vec3 pos, glm::vec3 eulers);

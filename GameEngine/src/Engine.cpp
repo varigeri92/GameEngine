@@ -17,14 +17,14 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 
-#include "Rendering/OpenGL/GL_VertexBuffer.h"
 #include "Entity.h"
-
 #include "AssetPath.h"
-
 #include "Rendering/Material.h"
-#include "Rendering/OpenGL/GL_Shader.h";
-#include "Rendering/OpenGL/GL_Texture.h";
+
+
+#include "Rendering/OpenGL/GL_VertexBuffer.h"
+#include "Rendering/OpenGL/GL_Shader.h"
+#include "Rendering/OpenGL/GL_Texture.h"
 
 
 using namespace core;
@@ -67,9 +67,7 @@ _API int Engine::Run()
 
 	std::vector<Vertex> vertices;
 	std::vector<uint32_t> indices;
-	
-	vertices.clear();
-	indices.clear();
+
 	const aiScene* aiScene = importer.ReadFile(ASSETS_PATH "Models\\Suzann.glb", aiProcess_JoinIdenticalVertices);
 	if (aiScene)
 	{
@@ -156,33 +154,11 @@ _API int Engine::Run()
 					}
 					LOG_INFO("OFFSET: " << offset.x << " / " << offset.y << " / " << offset.z);
 					bid = mc1.m_vertexBuffer->Push(_vertices, indices);
-
-
-					/*
-					Entity ent1 = scene.CreateEntity("Suzann_" + std::to_string(d) + "_" + std::to_string(h) + "_" +std::to_string(w));
-					MeshComponent& mc1 = ent1.AddComponet<MeshComponent>(vertices, indices);
-					ent1.GetComponent<Transform>().position = { (float)w * distance, (float)h * distance, (float)d * distance };
-					if (d % 2 == 0)
-						mc1.material = suzannMaterial;
-					else
-						mc1.material = suzannMaterial_2;
-					*/
-
 				}
 			}
 		}
 
-
-		/*
-		Entity ent2 = scene.CreateEntity("Suzann_inBatch_2");
-		MeshComponent& mc2 = ent2.AddComponet<MeshComponent>();
-		mc2.m_vertexBuffer = mc1.m_vertexBuffer;
-		LOG_INFO("Total Vertex Count: " << vertices.size() * 1000);
-		mc2.material = suzannMaterial;
-		*/
-
-
-		Entity ambientity = scene.CreateEntity("Ambientity");
+		Entity ambientity = scene.CreateEntity("Ambient");
 		auto ambientComponent = ambientity.AddComponet<Ambient>();
 		ambientComponent.ambientColor = { 1.f, 1.f, 1.f };
 		ambientComponent.intensity = 1;
@@ -193,7 +169,6 @@ _API int Engine::Run()
 		scene.Light->lightColor = { 1.f, 1.f, 1.f };
 		scene.Light->lightIntensity = 1.f;
 		scene.LightTransform = &empty.GetComponent<Transform>();
-
 
 		Entity cameraEntity = scene.CreateEntity("Camera");
 		CameraComponent cameraComponent 
